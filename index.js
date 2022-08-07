@@ -42,27 +42,29 @@ function playRound(playerSelection = () => playerSelection.toLowerCase(), comput
     }
   }
 
-  return `They're the same. Player with: ${playerScore} points and Computer with: ${computerScore} points `;
+  console.log( `They're the same. Player with: ${playerScore} points and Computer with: ${computerScore} points `);
 }
 
 function game() {
 
-  for (let index = 0; index < 5; index++) {
+  do{
     let playerSelection = prompt("type rock, paper or scissors");
     if ((playerSelection !== "rock") && (playerSelection !== "scissors") && playerSelection !== "paper") {
 			alert("You ought to put rock, paper or scissors");  			
     } else {
-			console.log(playerSelection);
-      const computerSelection = getComputerChoice();
-      console.log(computerSelection);
+			console.log(`Human choose: ${playerSelection}`);
+
+      const computerSelection = "rock";
+      console.log(`Computer choose: ${computerSelection}`);
+      
       playRound(playerSelection, computerSelection);
       round += 1;
       console.log(`Round number:${round} Human:${playerScore} and Computer:${computerScore}`);
     }  
-  }
+  } while (round <5);
 
 	if (playerScore > computerScore) {
-		return `The winner is Player with:${playerScore} points and Computer with:${computerScore}`;
+		return `The winner is Human with:${playerScore} points and Computer with:${computerScore}`;
 	} else if (computerScore > playerScore) {
 		return `The winner is Computer:${computerScore} points and Player:${playerScore} points`;
 	} else {
@@ -71,4 +73,3 @@ function game() {
 }
 
 console.log(game());
-// fix problem with prove the correct string put by the player
