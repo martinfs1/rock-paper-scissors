@@ -21,59 +21,65 @@ function getPlayerSelection(e) {
 }
 
 function playRound(e) {
-  let playerSelection = getPlayerSelection(e);
-  humanChoose.textContent = `Human choose: ${playerSelection}`;
 
-  let computerSelection = getComputerChoice();
-  computersChoose.textContent = `Computer choose: ${computerSelection}`;
+  tieResult.textContent = "";
 
-  while (playerSelection !== computerSelection) {
-    if (playerSelection === `rock` && computerSelection === `scissors`) {
-      playerScore += 1;
-      console.log(playerScore);
-      return playerScore;
-    } else if (playerSelection === `scissors` && computerSelection === `rock`) {
-      computerScore += 1;
-      return computerScore;
-    } else if (
-      playerSelection === `scissors` &&
-      computerSelection === `paper`
-    ) {
-      playerScore += 1;
-      return playerScore;
-    } else if (
-      playerSelection === `paper` &&
-      computerSelection === `scissors`
-    ) {
-      computerScore += 1;
-      return computerScore;
-    } else if (playerSelection === `paper` && computerSelection === `rock`) {
-      playerScore += 1;
-      return playerScore;
-    } else if (playerSelection === `rock` && computerSelection === `paper`) {
-      computerScore += 1;
-      return computerScore;
+    let playerSelection = getPlayerSelection(e);
+    humanChoose.textContent = `Human choose: ${playerSelection}`;
+  
+    let computerSelection = getComputerChoice();
+    computersChoose.textContent = `Computer choose: ${computerSelection}`;
+  
+    while (playerSelection !== computerSelection) {
+      if (playerSelection === `rock` && computerSelection === `scissors`) {
+        playerScore += 1;
+        return playerScore;
+      } else if (playerSelection === `scissors` && computerSelection === `rock`) {
+        computerScore += 1;
+        return computerScore;
+      } else if (
+        playerSelection === `scissors` &&
+        computerSelection === `paper`
+      ) {
+        playerScore += 1;
+        return playerScore;
+      } else if (
+        playerSelection === `paper` &&
+        computerSelection === `scissors`
+      ) {
+        computerScore += 1;
+        return computerScore;
+      } else if (playerSelection === `paper` && computerSelection === `rock`) {
+        playerScore += 1;
+        return playerScore;
+      } else if (playerSelection === `rock` && computerSelection === `paper`) {
+        computerScore += 1;
+        return computerScore;
+      }
+    } 
+  
+
+  if((playerScore===5) && (playerScore > computerScore)) {
+    HumanScore.textContent = ` The Winner is the Human with: ${playerScore} points`;
+    machineScore.textContent = `Computer : ${computerScore} points`;    
+    }else if ((computerScore ===5) && (computerScore > playerScore)) {
+      HumanScore.textContent = `Human : ${playerScore} points`;
+      machineScore.textContent = `The Winner is the Computer with : ${computerScore}
+       points`;   
     }
-  }
 
-  tieResult.textContent =`They're the same. Player with: ${playerScore} points and
-   Computer with: ${computerScore} points `;
+  tieResult.textContent = `There is a tie. `;
+
 }
 
-console.log("despues de jugar una ronda ");
-
-// function game() {
-//   if (playerScore > computerScore) {
-//   	return `The winner is Human with:${playerScore} points and
-//      Computer with:${computerScore}`;
-//   } else if (computerScore > playerScore) {
-//   	return `The winner is Computer:${computerScore} points and
-//     Player:${playerScore} points`;
-//   } else {
-//   	return `There is a tie Human:${playerScore} - Computer:${computerScore}`;
-//   }
-// }
-
+function reset() {
+  tieResult.textContent = "";
+  humanChoose.textContent = "";
+  computersChoose.textContent = "";
+ HumanScore.textContent = "";
+ machineScore.textContent = "";
+  
+}
 const btnRock = document.querySelector("#btnRock");
 btnRock.addEventListener("click", playRound);
 
@@ -84,11 +90,20 @@ const btnScissors = document.querySelector("#btnScissors");
 btnScissors.addEventListener("click", playRound);
 
 const displayResults = document.querySelector("#results");
-const humanChoose = document.createElement("p");
+const humanChoose = document.createElement("div");
 displayResults.appendChild(humanChoose);
 
-const computersChoose = document.createElement("p");
+const computersChoose = document.createElement("div");
 displayResults.appendChild(computersChoose);
 
-const tieResult = document.createElement('p')
-displayResults.appendChild(tieResult)
+const tieResult = document.createElement("p");
+displayResults.appendChild(tieResult);
+
+const HumanScore = document.createElement("div");
+displayResults.appendChild(HumanScore);
+
+const machineScore = document.createElement("div");
+displayResults.appendChild(machineScore);
+
+const btnReset = document.querySelector('#btnReset');
+btnReset.addEventListener('click', reset)
