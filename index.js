@@ -21,65 +21,74 @@ function getPlayerSelection(e) {
 }
 
 function playRound(e) {
-
   tieResult.textContent = "";
 
-    let playerSelection = getPlayerSelection(e);
-    humanChoose.textContent = `Human choose: ${playerSelection}`;
-  
-    let computerSelection = getComputerChoice();
-    computersChoose.textContent = `Computer choose: ${computerSelection}`;
-  
-    while (playerSelection !== computerSelection) {
-      if (playerSelection === `rock` && computerSelection === `scissors`) {
-        playerScore += 1;
-        return playerScore;
-      } else if (playerSelection === `scissors` && computerSelection === `rock`) {
-        computerScore += 1;
-        return computerScore;
-      } else if (
-        playerSelection === `scissors` &&
-        computerSelection === `paper`
-      ) {
-        playerScore += 1;
-        return playerScore;
-      } else if (
-        playerSelection === `paper` &&
-        computerSelection === `scissors`
-      ) {
-        computerScore += 1;
-        return computerScore;
-      } else if (playerSelection === `paper` && computerSelection === `rock`) {
-        playerScore += 1;
-        return playerScore;
-      } else if (playerSelection === `rock` && computerSelection === `paper`) {
-        computerScore += 1;
-        return computerScore;
-      }
-    } 
-  
+  let playerSelection = getPlayerSelection(e);
+  humanChoose.textContent = `Human choose: ${playerSelection}`;
 
-  if((playerScore===5) && (playerScore > computerScore)) {
-    HumanScore.textContent = ` The Winner is the Human with: ${playerScore} points`;
-    machineScore.textContent = `Computer : ${computerScore} points`;    
-    }else if ((computerScore ===5) && (computerScore > playerScore)) {
-      HumanScore.textContent = `Human : ${playerScore} points`;
-      machineScore.textContent = `The Winner is the Computer with : ${computerScore}
-       points`;   
+  let computerSelection = getComputerChoice();
+  computersChoose.textContent = `Computer choose: ${computerSelection}`;
+
+  while (playerSelection !== computerSelection) {
+    if (playerSelection === `rock` && computerSelection === `scissors`) {
+      playerScore += 1;
+      thereIsAWinner(playerScore, computerScore);
+      return playerScore;
+    } else if (playerSelection === `scissors` && computerSelection === `rock`) {
+      computerScore += 1;
+      thereIsAWinner(playerScore, computerScore);
+      return computerScore;
+    } else if (
+      playerSelection === `scissors` &&
+      computerSelection === `paper`
+    ) {
+      playerScore += 1;
+      thereIsAWinner(playerScore, computerScore);
+      return playerScore;
+    } else if (
+      playerSelection === `paper` &&
+      computerSelection === `scissors`
+    ) {
+      computerScore += 1;
+      thereIsAWinner(playerScore, computerScore);
+      return computerScore;
+    } else if (playerSelection === `paper` && computerSelection === `rock`) {
+      playerScore += 1;
+      thereIsAWinner(playerScore, computerScore);
+      return playerScore;
+    } else if (playerSelection === `rock` && computerSelection === `paper`) {
+      computerScore += 1;
+      thereIsAWinner(playerScore, computerScore);
+      return computerScore;
     }
-
+  }
   tieResult.textContent = `There is a tie. `;
+}
 
+function thereIsAWinner(playerScore, computerScore) {
+  if (playerScore === 5 && playerScore > computerScore) {
+    HumanScore.textContent = ` The Winner is the Human with: ${playerScore} points`;
+    machineScore.textContent = `Computer : ${computerScore} points`;
+  } else if (computerScore === 5 && computerScore > playerScore) {
+    HumanScore.textContent = `Human : ${playerScore} points`;
+    machineScore.textContent = `The Winner is the Computer with : ${computerScore}
+       points`;
+  } else {
+    HumanScore.textContent = `Human score: ${playerScore} points`;
+    machineScore.textContent = `Computer score : ${computerScore} points`;
+  }
 }
 
 function reset() {
   tieResult.textContent = "";
   humanChoose.textContent = "";
   computersChoose.textContent = "";
- HumanScore.textContent = "";
- machineScore.textContent = "";
-  
+  playerScore = 0;
+  computerScore = 0;
+  HumanScore.textContent = `Human score: ${playerScore} points`;
+  machineScore.textContent = `Computer score : ${computerScore} points`;
 }
+
 const btnRock = document.querySelector("#btnRock");
 btnRock.addEventListener("click", playRound);
 
@@ -99,11 +108,11 @@ displayResults.appendChild(computersChoose);
 const tieResult = document.createElement("p");
 displayResults.appendChild(tieResult);
 
-const HumanScore = document.createElement("div");
+let HumanScore = document.createElement("div");
 displayResults.appendChild(HumanScore);
 
-const machineScore = document.createElement("div");
+let machineScore = document.createElement("div");
 displayResults.appendChild(machineScore);
 
-const btnReset = document.querySelector('#btnReset');
-btnReset.addEventListener('click', reset)
+const btnReset = document.querySelector("#btnReset");
+btnReset.addEventListener("click", reset);
